@@ -1,0 +1,1114 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "A service to hanlde budgeting",
+        "version": "2023-07-08",
+        "description": "Handles the storing and processing of budgets and expenses."
+    },
+    "paths": {
+        "/budgets": {
+            "get": {
+                "description": "Queries for the availble Budgets.",
+                "operationId": "ListBudgets",
+                "parameters": [
+                    {
+                        "name": "maxResults",
+                        "in": "query",
+                        "description": "A the max number of results to return in a query.",
+                        "schema": {
+                            "type": "number",
+                            "maximum": 100,
+                            "minimum": 1,
+                            "description": "A the max number of results to return in a query."
+                        }
+                    },
+                    {
+                        "name": "nextToken",
+                        "in": "query",
+                        "description": "A token used to for querying the next page of results",
+                        "schema": {
+                            "type": "string",
+                            "description": "A token used to for querying the next page of results"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ListBudgets 200 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListBudgetsResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "ValidationError 400 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "AccessDeniedError 403 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccessDeniedErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "ThrottlingError 429 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThrottlingErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "InternalServerError 500 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerErrorResponseContent"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "aws_proxy",
+                    "httpMethod": "POST",
+                    "uri": ""
+                }
+            },
+            "post": {
+                "description": "Creates a new budget.",
+                "operationId": "CreateBudget",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateBudgetRequestContent"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "CreateBudget 200 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateBudgetResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "ValidationError 400 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "402": {
+                        "description": "ResourceLimitExceededError 402 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResourceLimitExceededErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "AccessDeniedError 403 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccessDeniedErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "ResourceConflictError 409 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResourceConflictErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "ThrottlingError 429 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThrottlingErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "InternalServerError 500 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerErrorResponseContent"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "aws_proxy",
+                    "httpMethod": "POST",
+                    "uri": ""
+                }
+            }
+        },
+        "/budgets/{budgetId}": {
+            "delete": {
+                "description": "Creates a new budget.",
+                "operationId": "DeleteBudget",
+                "parameters": [
+                    {
+                        "name": "budgetId",
+                        "in": "path",
+                        "description": "Id of the budget to delete.",
+                        "schema": {
+                            "type": "string",
+                            "description": "Id of the budget to delete."
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "DeleteBudget 200 response"
+                    },
+                    "400": {
+                        "description": "ValidationError 400 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "AccessDeniedError 403 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccessDeniedErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "ResourceNotFoundError 404 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResourceNotFoundErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "ThrottlingError 429 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThrottlingErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "InternalServerError 500 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerErrorResponseContent"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "aws_proxy",
+                    "httpMethod": "POST",
+                    "uri": ""
+                }
+            },
+            "get": {
+                "description": "Gets the data on a budget, and returns a paginated list of Expenses.",
+                "operationId": "DescribeBudget",
+                "parameters": [
+                    {
+                        "name": "budgetId",
+                        "in": "path",
+                        "description": "Represents the ID of a budget.",
+                        "schema": {
+                            "type": "string",
+                            "description": "Represents the ID of a budget."
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "startDate",
+                        "in": "query",
+                        "description": "    Starting timestamp of range to grab expenses within. If provided 'endDate' MUST also be provided.\n    If not provided, will query all available expenses in budget.\n",
+                        "schema": {
+                            "type": "string",
+                            "description": "    Starting timestamp of range to grab expenses within. If provided 'endDate' MUST also be provided.\n    If not provided, will query all available expenses in budget.\n",
+                            "format": "date-time"
+                        }
+                    },
+                    {
+                        "name": "endDate",
+                        "in": "query",
+                        "description": "    End timestamp of range to grab expenses within. If provided 'startDate' MUST also be provided.\n    If not provided, will query all available expenses in budget.\n",
+                        "schema": {
+                            "type": "string",
+                            "description": "    End timestamp of range to grab expenses within. If provided 'startDate' MUST also be provided.\n    If not provided, will query all available expenses in budget.\n",
+                            "format": "date-time"
+                        }
+                    },
+                    {
+                        "name": "maxResults",
+                        "in": "query",
+                        "description": "A the max number of results to return in a query.",
+                        "schema": {
+                            "type": "number",
+                            "maximum": 100,
+                            "minimum": 1,
+                            "description": "A the max number of results to return in a query."
+                        }
+                    },
+                    {
+                        "name": "nextToken",
+                        "in": "query",
+                        "description": "A token used to for querying the next page of results",
+                        "schema": {
+                            "type": "string",
+                            "description": "A token used to for querying the next page of results"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "DescribeBudget 200 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DescribeBudgetResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "ValidationError 400 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "AccessDeniedError 403 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccessDeniedErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "ResourceNotFoundError 404 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResourceNotFoundErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "ThrottlingError 429 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThrottlingErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "InternalServerError 500 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerErrorResponseContent"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "aws_proxy",
+                    "httpMethod": "POST",
+                    "uri": ""
+                }
+            },
+            "post": {
+                "description": "Creates an existing budget.",
+                "operationId": "UpdateBudget",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBudgetRequestContent"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "parameters": [
+                    {
+                        "name": "budgetId",
+                        "in": "path",
+                        "description": "Id of the created budget.",
+                        "schema": {
+                            "type": "string",
+                            "description": "Id of the created budget."
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "UpdateBudget 200 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpdateBudgetResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "ValidationError 400 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "AccessDeniedError 403 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccessDeniedErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "ResourceNotFoundError 404 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResourceNotFoundErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "ThrottlingError 429 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThrottlingErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "InternalServerError 500 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerErrorResponseContent"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "aws_proxy",
+                    "httpMethod": "POST",
+                    "uri": ""
+                }
+            }
+        },
+        "/budgets/{budgetId}/expenses": {
+            "post": {
+                "description": "Creates a new expense.",
+                "operationId": "CreateExpense",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateExpenseRequestContent"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "parameters": [
+                    {
+                        "name": "budgetId",
+                        "in": "path",
+                        "description": "Name of the new budget.",
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the new budget."
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "CreateExpense 200 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateExpenseResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "ValidationError 400 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "402": {
+                        "description": "ResourceLimitExceededError 402 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResourceLimitExceededErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "AccessDeniedError 403 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccessDeniedErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "ResourceNotFoundError 404 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResourceNotFoundErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "ResourceConflictError 409 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResourceConflictErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "ThrottlingError 429 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThrottlingErrorResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "InternalServerError 500 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerErrorResponseContent"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "aws_proxy",
+                    "httpMethod": "POST",
+                    "uri": ""
+                }
+            }
+        },
+        "/budgets/{budgetId}/expenses/{expenseId}": {
+            "delete": {
+                "description": "Creates an expense.",
+                "operationId": "DeleteExpense",
+                "parameters": [
+                    {
+                        "name": "budgetId",
+                        "in": "path",
+                        "description": "Id of the budget of the expense to delete.",
+                        "schema": {
+                            "type": "string",
+                            "description": "Id of the budget of the expense to delete."
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "expenseId",
+                        "in": "path",
+                        "description": "Id of the expense to delete.",
+                        "schema": {
+                            "type": "string",
+                            "description": "Id of the expense to delete."
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "DeleteExpense 200 response"
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "aws_proxy",
+                    "httpMethod": "POST",
+                    "uri": ""
+                }
+            },
+            "post": {
+                "description": "Updates an existing expense.",
+                "operationId": "UpdateExpense",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateExpenseRequestContent"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "parameters": [
+                    {
+                        "name": "budgetId",
+                        "in": "path",
+                        "description": "Id of the budget of the expense to update.",
+                        "schema": {
+                            "type": "string",
+                            "description": "Id of the budget of the expense to update."
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "expenseId",
+                        "in": "path",
+                        "description": "Id of the expense to update.",
+                        "schema": {
+                            "type": "string",
+                            "description": "Id of the expense to update."
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "UpdateExpense 200 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpdateExpenseResponseContent"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "aws_proxy",
+                    "httpMethod": "POST",
+                    "uri": ""
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AccessDeniedErrorResponseContent": {
+                "type": "object",
+                "description": "Caller does not have sufficient permissions to make request.",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            },
+            "AllowedUser": {
+                "description": "Identifies a user with access to the budget.",
+                "oneOf": [
+                    {
+                        "type": "object",
+                        "title": "email",
+                        "properties": {
+                            "email": {
+                                "type": "string",
+                                "pattern": "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$",
+                                "description": "An email identifying accounts with access to this budget"
+                            }
+                        },
+                        "required": [
+                            "email"
+                        ]
+                    }
+                ]
+            },
+            "Budget": {
+                "type": "object",
+                "description": "A weekly budget.",
+                "properties": {
+                    "budgetId": {
+                        "type": "string",
+                        "description": "Represents the ID of a budget."
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 20,
+                        "minLength": 1,
+                        "description": "The name associated witha a budget"
+                    },
+                    "limit": {
+                        "type": "number",
+                        "description": "The weekly budget limit. How much is allocated for spending in a given week (in number of cents)."
+                    },
+                    "allowedUsers": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AllowedUser"
+                        },
+                        "maxItems": 10,
+                        "minItems": 1,
+                        "description": "A list of emails with access to this budget"
+                    }
+                },
+                "required": [
+                    "allowedUsers",
+                    "budgetId",
+                    "limit",
+                    "name"
+                ]
+            },
+            "CreateBudgetRequestContent": {
+                "type": "object",
+                "description": "Input for creating a new budget",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 20,
+                        "minLength": 1,
+                        "description": "Name of the new budget."
+                    },
+                    "limit": {
+                        "type": "number",
+                        "description": "Weekly spending limit."
+                    },
+                    "allowedUsers": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AllowedUser"
+                        },
+                        "maxItems": 10,
+                        "minItems": 1,
+                        "description": "Users with access to this API"
+                    },
+                    "clientToken": {
+                        "type": "string",
+                        "description": "A token used to implement idempotentcy"
+                    }
+                },
+                "required": [
+                    "allowedUsers",
+                    "clientToken",
+                    "limit",
+                    "name"
+                ]
+            },
+            "CreateBudgetResponseContent": {
+                "type": "object",
+                "description": "The response from creating a new budget",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 20,
+                        "minLength": 1,
+                        "description": "Name of the created budget."
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Id of the created budget."
+                    }
+                },
+                "required": [
+                    "id",
+                    "name"
+                ]
+            },
+            "CreateExpenseRequestContent": {
+                "type": "object",
+                "description": "Input for creating a new budget",
+                "properties": {
+                    "expenseDate": {
+                        "type": "number",
+                        "description": "When an expense occured.",
+                        "format": "double"
+                    },
+                    "expenseDescription": {
+                        "type": "string",
+                        "maxLength": 140,
+                        "minLength": 1,
+                        "description": "Description of expense."
+                    },
+                    "expenseAmoundCents": {
+                        "type": "number",
+                        "minimum": 0,
+                        "description": "The amount an expense cost, in number of cents."
+                    },
+                    "expenseState": {
+                        "$ref": "#/components/schemas/ExpenseState"
+                    },
+                    "clientToken": {
+                        "type": "string",
+                        "description": "A token used to implement idempotentcy"
+                    }
+                },
+                "required": [
+                    "clientToken",
+                    "expenseAmoundCents",
+                    "expenseDate",
+                    "expenseDescription",
+                    "expenseState"
+                ]
+            },
+            "CreateExpenseResponseContent": {
+                "type": "object",
+                "description": "The response from creating a new expense",
+                "properties": {
+                    "expenseDescription": {
+                        "type": "string",
+                        "maxLength": 140,
+                        "minLength": 1,
+                        "description": "Description of the new expense."
+                    },
+                    "expenseId": {
+                        "type": "string",
+                        "description": "Id of the created budget."
+                    }
+                },
+                "required": [
+                    "expenseDescription",
+                    "expenseId"
+                ]
+            },
+            "DescribeBudgetResponseContent": {
+                "type": "object",
+                "properties": {
+                    "nextToken": {
+                        "type": "string",
+                        "description": "A token used to for querying the next page of results"
+                    },
+                    "budget": {
+                        "$ref": "#/components/schemas/Budget"
+                    },
+                    "expenses": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Expense"
+                        },
+                        "maxItems": 100,
+                        "minItems": 0,
+                        "description": "A list of expenses."
+                    }
+                },
+                "required": [
+                    "budget",
+                    "expenses"
+                ]
+            },
+            "Expense": {
+                "type": "object",
+                "description": "The data associcated with an Expense.",
+                "properties": {
+                    "expenseId": {
+                        "type": "string",
+                        "description": "The ID of an expense."
+                    },
+                    "expenseDate": {
+                        "type": "number",
+                        "description": "When an expense occured.",
+                        "format": "double"
+                    },
+                    "expenseDescription": {
+                        "type": "string",
+                        "maxLength": 140,
+                        "minLength": 1,
+                        "description": "Description of expense."
+                    },
+                    "expenseAmoundCents": {
+                        "type": "number",
+                        "minimum": 0,
+                        "description": "The amount an expense cost, in number of cents."
+                    },
+                    "expenseState": {
+                        "$ref": "#/components/schemas/ExpenseState"
+                    }
+                },
+                "required": [
+                    "expenseAmoundCents",
+                    "expenseDate",
+                    "expenseDescription",
+                    "expenseId",
+                    "expenseState"
+                ]
+            },
+            "ExpenseState": {
+                "type": "string",
+                "description": "Describes whether this expense has happened, or will happen.",
+                "enum": [
+                    "PLANNED",
+                    "PAID"
+                ]
+            },
+            "InternalServerErrorResponseContent": {
+                "type": "object",
+                "description": "The service is unable to process the request at this time.",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            },
+            "ListBudgetsResponseContent": {
+                "type": "object",
+                "properties": {
+                    "nextToken": {
+                        "type": "string",
+                        "description": "A token used to for querying the next page of results"
+                    },
+                    "budgets": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Budget"
+                        },
+                        "maxItems": 100,
+                        "minItems": 0,
+                        "description": "A list of budgets"
+                    }
+                },
+                "required": [
+                    "budgets"
+                ]
+            },
+            "ResourceConflictErrorResponseContent": {
+                "type": "object",
+                "description": "The resource conflicts with an existing resource.",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            },
+            "ResourceLimitExceededErrorResponseContent": {
+                "type": "object",
+                "description": "Caller has exceeded the limits provisioned for your account. (i.e. You have crated too many budgets).",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            },
+            "ResourceNotFoundErrorResponseContent": {
+                "type": "object",
+                "description": "No resource found for given identifier(s).",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            },
+            "ThrottlingErrorResponseContent": {
+                "type": "object",
+                "description": "The request was denied due to request throttling.",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            },
+            "UpdateBudgetRequestContent": {
+                "type": "object",
+                "description": "Input for updating a budget",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 20,
+                        "minLength": 1,
+                        "description": "Name to update the budget to."
+                    },
+                    "limit": {
+                        "type": "number",
+                        "description": "Weekly spending limit to update the budget to. NOTE: This will retroactively apply this budget limit to previous weeks."
+                    },
+                    "allowedUsers": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AllowedUser"
+                        },
+                        "maxItems": 10,
+                        "minItems": 1,
+                        "description": "Users with access to this API"
+                    }
+                },
+                "required": [
+                    "allowedUsers",
+                    "limit",
+                    "name"
+                ]
+            },
+            "UpdateBudgetResponseContent": {
+                "type": "object",
+                "description": "The response from updating a budget",
+                "properties": {
+                    "budget": {
+                        "$ref": "#/components/schemas/Budget"
+                    }
+                },
+                "required": [
+                    "budget"
+                ]
+            },
+            "UpdateExpenseRequestContent": {
+                "type": "object",
+                "description": "Input for updating a budget",
+                "properties": {
+                    "expenseDate": {
+                        "type": "number",
+                        "description": "When an expense occured.",
+                        "format": "double"
+                    },
+                    "expenseDescription": {
+                        "type": "string",
+                        "maxLength": 140,
+                        "minLength": 1,
+                        "description": "Description of expense."
+                    },
+                    "expenseAmoundCents": {
+                        "type": "number",
+                        "minimum": 0,
+                        "description": "The amount an expense cost, in number of cents."
+                    },
+                    "expenseState": {
+                        "$ref": "#/components/schemas/ExpenseState"
+                    }
+                },
+                "required": [
+                    "expenseAmoundCents",
+                    "expenseDate",
+                    "expenseDescription",
+                    "expenseState"
+                ]
+            },
+            "UpdateExpenseResponseContent": {
+                "type": "object",
+                "description": "The response from updating an expense",
+                "properties": {
+                    "expense": {
+                        "$ref": "#/components/schemas/Expense"
+                    }
+                },
+                "required": [
+                    "expense"
+                ]
+            },
+            "ValidationErrorResponseContent": {
+                "type": "object",
+                "description": "The request fails to satisfy the constraints specified.",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            }
+        }
+    }
+}
