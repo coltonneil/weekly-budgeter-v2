@@ -13,7 +13,8 @@ export class ApiHandlerStack extends Stack {
 
         this.lambdaHandlers = new Map<string, Function>();
 
-        this.lambdaHandlers.set("ListBudgets", this.createDummyHandler("ListBudgets", `
+        this.lambdaHandlers.set("ListBudgets", this.createHandler("ListBudgets", "./packages/functions/src/list-budgets"));
+/*         this.lambdaHandlers.set("ListBudgets", this.createDummyHandler("ListBudgets", `
             exports.handler = async (event) => {
                 return {
                     statusCode: 200,
@@ -22,7 +23,7 @@ export class ApiHandlerStack extends Stack {
                     }),
                 };
             };
-        `));
+        `)); */
         this.lambdaHandlers.set("CreateBudget", this.createDummyHandler("CreateBudget", `
             exports.handler = async (event) => {
                 return {
@@ -112,6 +113,19 @@ export class ApiHandlerStack extends Stack {
         const handler = new Function(this, handlerName, {
             runtime: Runtime.NODEJS_18_X,
             code: Code.fromInline(handlerCode), // TODO: Update to point to handlers directory
+            handler: 'index.handler',
+            timeout: Duration.seconds(10),           
+        });
+
+        handler.role?.grantAssumeRole(new ServicePrincipal('apigateway.amazonaws.com'));
+
+        return handler;
+    }
+
+    private createHandler(handlerName: string, handlerPath: string): Function {
+        const handler = new Function(this, handlerName, {
+            runtime: Runtime.NODEJS_18_X,
+            code: Code.fromAsset(handlerPath), // TODO: Update to point to handlers directory
             handler: 'index.handler',
             timeout: Duration.seconds(10),           
         });
