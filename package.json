@@ -12,9 +12,8 @@
     "test:unit": "vitest",
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
     "format": "prettier --plugin-search-dir . --write .",
-    "sst:deploy": "sst deploy",
-    "sst:dev": "sst dev",
-    "functions:build": "tsc --project ./packages/functions"
+    "sst:deploy": "tsc --project ./packages/functions && sst deploy",
+    "sst:dev": "tsc --project ./packages/functions && sst dev"
   },
   "devDependencies": {
     "@floating-ui/dom": "^1.4.4",
